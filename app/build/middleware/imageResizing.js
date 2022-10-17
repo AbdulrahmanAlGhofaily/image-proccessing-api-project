@@ -59,9 +59,10 @@ var resizeImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                         .toFile("".concat(path_1.default.resolve(), "\\assets\\thumb\\").concat(imageName, "_thumb.jpg"))];
             case 1:
                 image = _a.sent();
-                return [2 /*return*/, res
-                        .status(200)
-                        .send({ message: 'Request is fulfilled, check thumb folder' })];
+                return [2 /*return*/, res.status(200).send({
+                        message: 'Request is fulfilled.',
+                        link: "".concat(path_1.default.normalize(path_1.default.resolve()), "\\assets\\thumb\\").concat(imageName, "_thumb.jpg"),
+                    })];
             case 2:
                 error_1 = _a.sent();
                 if (error_1 instanceof Error) {
