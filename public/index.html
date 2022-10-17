@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer type="module" src="./js/script.js"></script>
+    <title>Image Processing</title>
+  </head>
+  <body>
+    <main class="main-container">
+      <div class="main-container__input-form">
+        <input
+          class="main-container__input image"
+          type="text"
+          placeholder="Image name"
+        />
+        <div class="main-container__input-form second-row">
+          <input
+            class="main-container__input width"
+            type="text"
+            placeholder="Width"
+          />
+          <input
+            class="main-container__input height"
+            type="text"
+            placeholder="Height"
+          />
+        </div>
+        <button class="main-container__button btn-primary">Resize</button>
+      </div>
+      <div class="error-container">
+        <span class="error-message hidden"></span>
+      </div>
+    </main>
+  </body>
+</html>
