@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import sharp from 'sharp';
 import path from 'path';
 import checkURL from '../utilities/checkURL';
@@ -11,10 +11,9 @@ type QueryObject = {
   height?: number | string;
 };
 
-const resizeImage = async (req: Request) => {
+const resizeImage = async (req: Request, res: Response) => {
   try {
     const queryObj: QueryObject = checkURL(req.query);
-    console.log(queryObj);
 
     const imageName: string = String(
       checkImage(queryObj.imageName as unknown as string)
@@ -27,10 +26,15 @@ const resizeImage = async (req: Request) => {
     )
       .resize(width, height)
       .toFile(`${path.resolve()}\\assets\\thumb\\${imageName}_thumb.jpg`);
+    return res.status(200).send({
+      message: 'Request is fulfilled.',
+      link: `${path.normalize(
+        path.resolve()
+      )}\\assets\\thumb\\${imageName}_thumb.jpg`,
+    });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error(`Oops, something went wrong: ` + error.message);
-      return error.message;
+      return res.status(400).send({ message: error.message });
     }
   }
 };

@@ -40,25 +40,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp_1 = __importDefault(require("sharp"));
-var resizeImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var imageName, width, height, image, err_1;
+var path_1 = __importDefault(require("path"));
+var checkURL_1 = __importDefault(require("../utilities/checkURL"));
+var checkImage_1 = __importDefault(require("../utilities/checkImage"));
+var isPositive_1 = __importDefault(require("../utilities/isPositive"));
+var resizeImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var queryObj, imageName, width, height, image, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                imageName = req.query.imageName;
-                width = Number(req.query.width);
-                height = Number(req.query.height);
-                return [4 /*yield*/, (0, sharp_1.default)("../../assets/full/".concat(imageName, ".jpg"))
+                queryObj = (0, checkURL_1.default)(req.query);
+                imageName = String((0, checkImage_1.default)(queryObj.imageName));
+                width = (0, isPositive_1.default)(queryObj.width);
+                height = (0, isPositive_1.default)(queryObj.height);
+                return [4 /*yield*/, (0, sharp_1.default)("".concat(path_1.default.resolve(), "\\assets\\full\\").concat(imageName, ".jpg"))
                         .resize(width, height)
-                        .jpeg()
-                        .toFile("../../assets/thumb/".concat(imageName, "_thumb"))];
+                        .toFile("".concat(path_1.default.resolve(), "\\assets\\thumb\\").concat(imageName, "_thumb.jpg"))];
             case 1:
                 image = _a.sent();
-                return [3 /*break*/, 3];
+                return [2 /*return*/, res
+                        .status(200)
+                        .send({ message: 'Request is fulfilled, check thumb folder' })];
             case 2:
-                err_1 = _a.sent();
-                console.error(err_1);
+                error_1 = _a.sent();
+                if (error_1 instanceof Error) {
+                    return [2 /*return*/, res.status(400).send({ message: error_1.message })];
+                }
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
