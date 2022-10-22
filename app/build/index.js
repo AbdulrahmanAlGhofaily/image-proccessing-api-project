@@ -5,9 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var cors_1 = __importDefault(require("cors"));
 var express_1 = __importDefault(require("express"));
+var path_1 = __importDefault(require("path"));
 var index_1 = __importDefault(require("./routes/index"));
 var app = (0, express_1.default)();
 var port = 3000;
+app.use(express_1.default.static(path_1.default.join(__dirname, 'assets')));
 app.get('/', function (req, res) {
     res.send('server root');
 });

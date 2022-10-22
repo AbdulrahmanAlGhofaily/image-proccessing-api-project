@@ -44,34 +44,38 @@ var path_1 = __importDefault(require("path"));
 var checkURL_1 = __importDefault(require("../utilities/checkURL"));
 var checkImage_1 = __importDefault(require("../utilities/checkImage"));
 var isPositive_1 = __importDefault(require("../utilities/isPositive"));
+var cache_1 = __importDefault(require("../utilities/cache"));
 var resizeImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var queryObj, imageName, width, height, finalResult, error_1;
+    var queryObj, imageName, width, height, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 3, , 4]);
                 queryObj = (0, checkURL_1.default)(req.query);
                 imageName = String((0, checkImage_1.default)(queryObj.imageName));
                 width = (0, isPositive_1.default)(queryObj.width);
                 height = (0, isPositive_1.default)(queryObj.height);
-                return [4 /*yield*/, (0, sharp_1.default)(path_1.default.join(path_1.default.resolve(), 'assets', 'full', "".concat(imageName, ".jpg")))
+                if (!(0, cache_1.default)(imageName, width, height)) return [3 /*break*/, 2];
+                return [4 /*yield*/, (0, sharp_1.default)(path_1.default.join(path_1.default.resolve(), 'src', 'assets', 'full', "".concat(imageName, ".jpg")))
                         .resize(width, height)
-                        .toFile(path_1.default.join(path_1.default.resolve(), 'assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")))];
+                        .toFile(path_1.default.join(path_1.default.resolve(), 'src', 'assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")))];
             case 1:
                 _a.sent();
-                finalResult = {
+                _a.label = 2;
+            case 2:
+                res.send({
                     statusCode: 200,
                     message: 'Request is fulfilled.',
-                    link: path_1.default.join('assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")),
-                };
-                return [2 /*return*/, finalResult];
-            case 2:
+                    link: path_1.default.join('thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")),
+                });
+                return [3 /*break*/, 4];
+            case 3:
                 error_1 = _a.sent();
                 if (error_1 instanceof Error) {
                     return [2 /*return*/, res.status(400).send({ message: error_1.message })];
                 }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
