@@ -23,11 +23,12 @@ const generateImage = async function (imageName, width, height) {
       submitButton.classList.add('hidden');
       mainCont.insertAdjacentHTML(
         'afterbegin',
-        `<img src="${imageLocation}" alt="">`
+        `<img src="http://localhost:3000/${imageLocation}" alt="">`
       );
       return;
     }
   } catch (err) {
+    console.log(err);
     errorMessage.innerHTML = err;
     errorMessage.classList.remove('hidden');
   }

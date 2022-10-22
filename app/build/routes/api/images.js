@@ -40,14 +40,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var path_1 = __importDefault(require("path"));
 var imageResizing_1 = __importDefault(require("../../middleware/imageResizing"));
 var images = express_1.default.Router();
 images.get('/', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, (0, imageResizing_1.default)(req, res)];
             case 1:
-                _a.sent();
+                result = (_a.sent());
+                if ((result === null || result === void 0 ? void 0 : result.statusCode) >= 200 && (result === null || result === void 0 ? void 0 : result.statusCode) <= 299) {
+                    res.status(result.statusCode).send({
+                        statusCode: result.statusCode,
+                        message: result.message,
+                        link: images.use(express_1.default.static(path_1.default.join(result.link, '../../../assets'))),
+                    });
+                }
                 next();
                 return [2 /*return*/];
         }

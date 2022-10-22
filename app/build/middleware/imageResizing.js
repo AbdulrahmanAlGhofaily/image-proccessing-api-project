@@ -45,7 +45,7 @@ var checkURL_1 = __importDefault(require("../utilities/checkURL"));
 var checkImage_1 = __importDefault(require("../utilities/checkImage"));
 var isPositive_1 = __importDefault(require("../utilities/isPositive"));
 var resizeImage = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var queryObj, imageName, width, height, image, error_1;
+    var queryObj, imageName, width, height, finalResult, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -54,15 +54,17 @@ var resizeImage = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 imageName = String((0, checkImage_1.default)(queryObj.imageName));
                 width = (0, isPositive_1.default)(queryObj.width);
                 height = (0, isPositive_1.default)(queryObj.height);
-                return [4 /*yield*/, (0, sharp_1.default)("".concat(path_1.default.resolve(), "\\assets\\full\\").concat(imageName, ".jpg"))
+                return [4 /*yield*/, (0, sharp_1.default)(path_1.default.join(path_1.default.resolve(), 'assets', 'full', "".concat(imageName, ".jpg")))
                         .resize(width, height)
-                        .toFile("".concat(path_1.default.resolve(), "\\assets\\thumb\\").concat(imageName, "_thumb.jpg"))];
+                        .toFile(path_1.default.join(path_1.default.resolve(), 'assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")))];
             case 1:
-                image = _a.sent();
-                return [2 /*return*/, res.status(200).send({
-                        message: 'Request is fulfilled.',
-                        link: "".concat(path_1.default.normalize(path_1.default.resolve()), "\\assets\\thumb\\").concat(imageName, "_thumb.jpg"),
-                    })];
+                _a.sent();
+                finalResult = {
+                    statusCode: 200,
+                    message: 'Request is fulfilled.',
+                    link: path_1.default.join('assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")),
+                };
+                return [2 /*return*/, finalResult];
             case 2:
                 error_1 = _a.sent();
                 if (error_1 instanceof Error) {

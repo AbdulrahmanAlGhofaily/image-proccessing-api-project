@@ -3,9 +3,10 @@ import resizeImage from '../../middleware/imageResizing';
 
 const images = express.Router();
 
-images.get('/', async (req, res, next) => {
-  await resizeImage(req, res);
-  next();
+images.use(resizeImage);
+
+images.get('/', (req, res) => {
+  res.send();
 });
 
 export default images;
