@@ -57,11 +57,14 @@ var resizeImage = function (req, res, next) { return __awaiter(void 0, void 0, v
                 return [4 /*yield*/, (0, sharpResize_1.default)(imageName, width, height)];
             case 1:
                 _a.sent();
-                res.send({
-                    statusCode: 200,
-                    message: 'Request is fulfilled.',
-                    link: path_1.default.join('thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")),
-                });
+                // If you wanna use the UI, uncomment this part
+                // res.send({
+                //   statusCode: 200,
+                //   message: 'Request is fulfilled.',
+                //   link: path.join('thumb', `${imageName}_${width}_${height}_thumb.jpg`),
+                // });
+                // If you want to recieve the image throw the same link, use this part
+                res.sendFile(path_1.default.join('thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")), { root: path_1.default.join('src', 'assets') });
                 next();
                 return [3 /*break*/, 3];
             case 2:
