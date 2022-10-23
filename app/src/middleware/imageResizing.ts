@@ -37,6 +37,7 @@ const resizeImage = async (
       path.join('thumb', `${imageName}_${width}_${height}_thumb.jpg`),
       { root: path.join('src', 'assets') }
     );
+
     next();
   } catch (error: unknown) {
     if (error instanceof Error) {
