@@ -18,3 +18,4 @@ app.use('/api', index_1.default);
 app.listen(port, function () {
     console.log("http://localhost:".concat(port));
 });
+exports.default = app;

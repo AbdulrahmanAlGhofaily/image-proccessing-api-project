@@ -6,7 +6,11 @@ import isPositive from '../utilities/isPositive';
 import { QueryObject } from '../types/QueryObject';
 import sharpResize from '../utilities/sharpResize';
 
-const resizeImage = async (req: Request, res: Response, next: NextFunction) => {
+const resizeImage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const queryObj: QueryObject = checkURL(req.query);
 
@@ -36,7 +40,7 @@ const resizeImage = async (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return res.status(400).send({ message: error.message });
+      res.status(400).send({ message: error.message });
     }
   }
 };
