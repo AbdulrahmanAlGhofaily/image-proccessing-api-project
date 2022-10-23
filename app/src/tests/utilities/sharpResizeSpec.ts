@@ -1,4 +1,3 @@
-import cache from '../../utilities/cache';
 import sharpResize from '../../utilities/sharpResize';
 
 describe('Check if resizing image function wroks', () => {
