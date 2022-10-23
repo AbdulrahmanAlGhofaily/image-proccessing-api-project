@@ -17,9 +17,12 @@ To start a live server for the backend, navigate to ./app and then run `npm run 
 
 To start eslint checking, navigate to ./app and then run `npm run lint`</br></br>
 
+To start prettier formatting, navigate to ./app and then run `npm run prettier`</br></br>
+
 ## Project Front-End
 
 This UI should do the job of showing the image after resizing it, so no need to look where is the image location (You could inspect the UI and look for the img src).</br>
+Make sure first to navigate to imageResezing.ts in the project files, uncomment from the line 24 to 28, and comment the line 32 to 35<br>
 To view project UI (Front-End), navigate to ./public and start a live server on index.html.</br>
 OR</br>
 Directly nvigate to and open index.html from your file system.</br></br>

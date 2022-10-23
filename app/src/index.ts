@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'assets')));
 
-app.get('/', (req, res) => {
+app.get('/', (req, res): void => {
   res.send('server root');
 });
 

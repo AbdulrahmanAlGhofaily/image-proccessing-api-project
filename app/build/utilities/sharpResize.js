@@ -40,38 +40,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var path_1 = __importDefault(require("path"));
-var checkURL_1 = __importDefault(require("../utilities/checkURL"));
-var checkImage_1 = __importDefault(require("../utilities/checkImage"));
-var isPositive_1 = __importDefault(require("../utilities/isPositive"));
-var sharpResize_1 = __importDefault(require("../utilities/sharpResize"));
-var resizeImage = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var queryObj, imageName, width, height, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                queryObj = (0, checkURL_1.default)(req.query);
-                imageName = String((0, checkImage_1.default)(queryObj.imageName));
-                width = (0, isPositive_1.default)(queryObj.width);
-                height = (0, isPositive_1.default)(queryObj.height);
-                return [4 /*yield*/, (0, sharpResize_1.default)(imageName, width, height)];
-            case 1:
-                _a.sent();
-                res.send({
-                    statusCode: 200,
-                    message: 'Request is fulfilled.',
-                    link: path_1.default.join('thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")),
-                });
-                next();
-                return [3 /*break*/, 3];
-            case 2:
-                error_1 = _a.sent();
-                if (error_1 instanceof Error) {
-                    return [2 /*return*/, res.status(400).send({ message: error_1.message })];
-                }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
+var sharp_1 = __importDefault(require("sharp"));
+var cache_1 = __importDefault(require("./cache"));
+function sharpResize(imageName, width, height) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!(0, cache_1.default)(imageName, width, height)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, (0, sharp_1.default)(path_1.default.join(path_1.default.resolve(), 'src', 'assets', 'full', "".concat(imageName, ".jpg")))
+                            .resize(width, height)
+                            .toFile(path_1.default.join(path_1.default.resolve(), 'src', 'assets', 'thumb', "".concat(imageName, "_").concat(width, "_").concat(height, "_thumb.jpg")))];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/, true];
+            }
+        });
     });
-}); };
-exports.default = resizeImage;
+}
+exports.default = sharpResize;
